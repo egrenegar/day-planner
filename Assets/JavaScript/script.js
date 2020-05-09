@@ -3,7 +3,10 @@
 // Get the current hour in military time (i.e. 14 for 2pm)
 
 $(document).ready(function () {
-    var currentHour = new Date().getHours();
+    // var currentHour = new Date().getHours();
+
+    var now = new Date;
+    currentHour = now.getHours();
     var currentDateAndTime = Date(Date.now());
     $("#currentDay").text(currentDateAndTime);
     // var textArea = $('.description').val()
@@ -20,31 +23,50 @@ $(document).ready(function () {
     // Remote the "past" class from this time block
     // Remove the "present" class from this time block
     // Add the "future" class to this time block
+    // function updateTime() {
+
+    //     var timeBlock = document.querySelectorAll(".time-block");
+
+    //     for (var i = 0; i < timeBlock.length; i++) {
+
+
+    //         console.log('timeBlock: ', timeBlock[i]);
+
+    //         var hour = parseInt($(timeBlock).attr('id').split('-')[1]);
+    //         console.log(hour);
+
+    //         if (hour < 13) {
+    //             $(timeBlock[i]).addClass('past');
+    //         }
+    //         else if (hour === 13) {
+    //             $('.time-block').removeClass('past');
+    //             $('.time-block').addClass('present');
+    //         } else {
+    //             $('.time-block').addClass('future');
+    //         }
+    //     }
+    // }
+
     function updateTime() {
 
-        var timeBlock = document.querySelectorAll(".time-block");
-
-        for (var i = 0; i < timeBlock.length; i++) {
-
-            
-            console.log('timeBlock: ', timeBlock[i]);
-
-            var hour = parseInt($(timeBlock).attr('id').split('-')[1]);
+        $('.time-block').each(function () {
+            hour = parseInt($(this).attr('id').split('-')[1])
             console.log(hour);
-
             if (hour < currentHour) {
-                $('.time-block').addClass('past');
+                $(this).addClass('past');
+            } else if (hour === currentHour) {
+                $(this).removeClass('past');
+                $(this).addClass('present');
+            } else {
+                $(this).addClass('future');
             }
-            // else if (hour === currentHour) {
-            //     $('.time-block').removeClass('past');
-            //     $('.time-block').addClass('present');
-            // } else {
-            //     $('.time-block').addClass('future');
-            // }
-        }
+        })
     }
 
     updateTime();
+    setInterval(updateTime, 60000);
+
+
 
 
 
@@ -72,8 +94,6 @@ $(document).ready(function () {
     localStorage.getItem('hour-15');
     localStorage.getItem('hour-16');
     localStorage.getItem('hour-17');
-    // updateTime();
-
 
 
     // Set up a click handler for the save button:
