@@ -6,9 +6,8 @@ $(document).ready(function () {
     var currentHour = new Date().getHours();
     var currentDateAndTime = Date(Date.now());
     $("#currentDay").text(currentDateAndTime);
-
-
-
+    // var textArea = $('.description').val()
+    var inputArr = [];
 
     // Loop over all of the .time-blocks
     // Figure out which hour this block represents
@@ -21,25 +20,39 @@ $(document).ready(function () {
     // Remote the "past" class from this time block
     // Remove the "present" class from this time block
     // Add the "future" class to this time block
-    $('.time-block').each(function () {
-        var hour = parseInt($(this).attr('id').split('-')[1]);
-        // console.log(hour);
-        if (hour < currentHour) {
-            $('.time-block').addClass('past');
-        } else if (hour === currentHour) {
-            $('.time-block').removeClass('past');
-        } else {
-            $('.time-block').removeClass('past', 'present');
-            $('.time-block').addClass('future');
+    function updateTime() {
+
+        var timeBlock = document.querySelectorAll(".time-block");
+
+        for (var i = 0; i < timeBlock.length; i++) {
+
+            
+            console.log('timeBlock: ', timeBlock[i]);
+
+            var hour = parseInt($(timeBlock).attr('id').split('-')[1]);
+            console.log(hour);
+
+            if (hour < currentHour) {
+                $('.time-block').addClass('past');
+            }
+            // else if (hour === currentHour) {
+            //     $('.time-block').removeClass('past');
+            //     $('.time-block').addClass('present');
+            // } else {
+            //     $('.time-block').addClass('future');
+            // }
         }
-    })
+    }
 
-
+    updateTime();
 
 
 
     // Call the function we just created to update the hours the first time
     // Re-run the function on an interval (every 60s?) to update as time changes
+    // document.onload = updateTime();
+
+
     // Load data for 9AM block from localStorage
     // Load data for 10AM block from localStorage
     // Load data for 11AM block from localStorage
@@ -50,15 +63,52 @@ $(document).ready(function () {
     // Load data for 4PM block from localStorage
     // Load data for 5PM block from localStorage
     // Update the current date/time at the top of the page
+    localStorage.getItem('hour-9');
+    localStorage.getItem('hour-10');
+    localStorage.getItem('hour-11');
+    localStorage.getItem('hour-12');
+    localStorage.getItem('hour-13');
+    localStorage.getItem('hour-14');
+    localStorage.getItem('hour-15');
+    localStorage.getItem('hour-16');
+    localStorage.getItem('hour-17');
+    // updateTime();
+
+
+
     // Set up a click handler for the save button:
     // Get the value from the textarea in the block that is being saved
     // Get the time (i.e. 9) of the time block that's being saved
     // Store the value from the textarea in localStorage, using the hour as the key
 
+    // var text = $('.description');
+
+    $('.saveBtn').on('click', function (event) {
+        event.preventDefault();
+        var element = event.target;
+
+        if (element.matches('button') === true) {
+            alert('You clicked a button!');
+            var userInput = $(element).siblings('textarea').val();
+            // console.log(userInput);
+            inputArr.push(userInput);
+
+            localStorage.setItem('hour', userInput)
+            // var value = $(divId).children('textarea.);
+            // var value = element.siblings.getAttribute('data-value');
+            // console.log(value);
 
 
 
+            //  var y = $('div:nth-child(2)').value
+            //  console.log(y);
 
+            // var item = document.createElement("div");
+            // item.textContent = groceries[event.target.parentElement.id];
+            // shoppingCartEl.append(item);
+        }
+
+    })
 
 
 })
