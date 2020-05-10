@@ -1,33 +1,19 @@
-// Wait for DOM to be "ready", then...
-// Create a function to update the hours
-// Get the current hour in military time (i.e. 14 for 2pm)
-
+// code runs when document is finished loading
 $(document).ready(function () {
     // time variables
     var currentHour = new Date().getHours();
     var currentDateAndTime = Date(Date.now());
     $("#currentDay").text(currentDateAndTime);
-    // display variables
-    // var textArea = $('#.description');
-    // var timeBlock = $('.time-block');
+    
 
-    var inputArr = [];
+    document.onload = updateTime();
+    document.onload = getValueText();
 
-    // Loop over all of the .time-blocks
-    // Figure out which hour this block represents
-    // If this block's hour is less than the current hour:
-    // Add the class "past" to this block
-    // Else if this block's hour is the current hour:
-    // Remove "past" class from this time block
-    // Add "present" class to this time block
-    // Else
-    // Remote the "past" class from this time block
-    // Remove the "present" class from this time block
-    // Add the "future" class to this time block
+    // loops over time-blocks to set past, present, or future classes which determines css styling
     function updateTime() {
-
+        
         $('.time-block').each(function () {
-           var hour = parseInt($(this).attr('id').split('-')[1])
+            var hour = parseInt($(this).attr('id').split('-')[1])
             // console.log(hour);
             if (hour < currentHour) {
                 $(this).addClass('past');
@@ -39,56 +25,47 @@ $(document).ready(function () {
             }
         })
     }
-
-
-    // Call the function we just created to update the hours the first time
-    // Re-run the function on an interval (every 60s?) to update as time changes
-    document.onload = updateTime();
+    // update the time every 60seconds
     setInterval(updateTime, 60000);
 
-    // Load data for 9AM block from localStorage
-    // Load data for 10AM block from localStorage
-    // Load data for 11AM block from localStorage
-    // Load data for 12PM block from localStorage
-    // Load data for 1PM block from localStorage
-    // Load data for 2PM block from localStorage
-    // Load data for 3PM block from localStorage
-    // Load data for 4PM block from localStorage
-    // Load data for 5PM block from localStorage
+    // get key/value pairs from local storage and render them to each time-block div
+    function getValueText() {
 
-    // Update the current date/time at the top of the page
-    // function getUserText() {
+        // for (var i = 0; i < 10; i++ ) {}
 
-    //     // JSON.parse(localStorage.getItem('hour-9'));
-    //     // JSON.parse(localStorage.getItem('hour-10'));
-    //     // JSON.parse(localStorage.getItem('hour-11'));
-    //     // JSON.parse(localStorage.getItem('hour-12'));
-    //     // JSON.parse(localStorage.getItem('hour-13'));
-    //     // JSON.parse(localStorage.getItem('hour-14'));
-    //     // JSON.parse(localStorage.getItem('hour-15'));
-    //     // JSON.parse(localStorage.getItem('hour-16'));
-    //     // JSON.parse(localStorage.getItem('hour-17'));
+        if (localStorage.key !== null) {
+            var hour9 = localStorage.getItem('hour-9');
+            $('#hour-9').children('textarea').val(hour9);
 
-        
-    // }
+            var hour10 = localStorage.getItem('hour-10');
+            $('#hour-10').children('textarea').val(hour10);
 
+            var hour11 = localStorage.getItem('hour-11');
+            $('#hour-11').children('textarea').val(hour11);
 
-    // Store the value from the textarea in localStorage, using the hour as the key
-    // function storeUserText() {
-    //     // Stringify and set "hour" keys in localStorage to userText array
-    //     // localStorage.setItem('hour-9', JSON.stringify(hour9));
-    //     // localStorage.setItem('hour-10', JSON.stringify(hour10));
-    //     // localStorage.setItem('hour-11', JSON.stringify(hour11));
-    //     // localStorage.setItem('hour-12', JSON.stringify(hour12));
-    //     // localStorage.setItem('hour-13', JSON.stringify(hour13));
-    //     // localStorage.setItem('hour-14', JSON.stringify(hour14));
-    //     // localStorage.setItem('hour-15', JSON.stringify(hour15));
-    //     // localStorage.setItem('hour-16', JSON.stringify(hour16));
-    //     // localStorage.setItem('hour-17', JSON.stringify(hour17));
-    // }
+            var hour12 = localStorage.getItem('hour-12');
+            $('#hour-12').children('textarea').val(hour12);
 
+            var hour13 = localStorage.getItem('hour-13');
+            $('#hour-13').children('textarea').val(hour13);
 
-    // Set up a click handler for the save button:
+            var hour14 = localStorage.getItem('hour-14');
+            $('#hour-14').children('textarea').val(hour14);
+
+            var hour15 = localStorage.getItem('hour-15');
+            $('#hour-15').children('textarea').val(hour15);
+
+            var hour16 = localStorage.getItem('hour-16');
+            $('#hour-16').children('textarea').val(hour16);
+
+            var hour17 = localStorage.getItem('hour-17');
+            $('#hour-17').children('textarea').val(hour17);
+        }
+
+        // Update the current date/time at the top of the page
+        updateTime();
+    }
+
     // When "Save" button is clicked...
     $('.saveBtn').on('click', function (event) {
         event.preventDefault();
@@ -96,24 +73,17 @@ $(document).ready(function () {
 
         // If that element is a button...
         if (element.matches('button') === true) {
-            alert('You clicked a button!');
 
             // Get the value of the user's input for each time block
             var hourBlock = $(element).parent().attr('id');
             var valueText = $(element).siblings('textarea').val().trim();
-            
-        
-            localStorage.setItem(hourBlock, valueText);
 
-            // Store updated userText in local storage, re-render the list
-            // storeUserText();
-            // renderUserText();
+            // Store updated user input in local storage, re-render the list
+            localStorage.setItem(hourBlock, valueText);
+            getValueText();
 
         }
 
     })
-
-
-
 
 })
