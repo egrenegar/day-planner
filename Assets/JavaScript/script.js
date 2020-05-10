@@ -3,13 +3,14 @@
 // Get the current hour in military time (i.e. 14 for 2pm)
 
 $(document).ready(function () {
-    // var currentHour = new Date().getHours();
-
-    var now = new Date;
-    currentHour = now.getHours();
+    // time variables
+    var currentHour = new Date().getHours();
     var currentDateAndTime = Date(Date.now());
     $("#currentDay").text(currentDateAndTime);
-    // var textArea = $('.description').val()
+    // display variables
+    // var textArea = $('#.description');
+    // var timeBlock = $('.time-block');
+
     var inputArr = [];
 
     // Loop over all of the .time-blocks
@@ -23,35 +24,11 @@ $(document).ready(function () {
     // Remote the "past" class from this time block
     // Remove the "present" class from this time block
     // Add the "future" class to this time block
-    // function updateTime() {
-
-    //     var timeBlock = document.querySelectorAll(".time-block");
-
-    //     for (var i = 0; i < timeBlock.length; i++) {
-
-
-    //         console.log('timeBlock: ', timeBlock[i]);
-
-    //         var hour = parseInt($(timeBlock).attr('id').split('-')[1]);
-    //         console.log(hour);
-
-    //         if (hour < 13) {
-    //             $(timeBlock[i]).addClass('past');
-    //         }
-    //         else if (hour === 13) {
-    //             $('.time-block').removeClass('past');
-    //             $('.time-block').addClass('present');
-    //         } else {
-    //             $('.time-block').addClass('future');
-    //         }
-    //     }
-    // }
-
     function updateTime() {
 
         $('.time-block').each(function () {
-            hour = parseInt($(this).attr('id').split('-')[1])
-            console.log(hour);
+           var hour = parseInt($(this).attr('id').split('-')[1])
+            // console.log(hour);
             if (hour < currentHour) {
                 $(this).addClass('past');
             } else if (hour === currentHour) {
@@ -63,17 +40,11 @@ $(document).ready(function () {
         })
     }
 
-    updateTime();
-    setInterval(updateTime, 60000);
-
-
-
-
 
     // Call the function we just created to update the hours the first time
     // Re-run the function on an interval (every 60s?) to update as time changes
-    // document.onload = updateTime();
-
+    document.onload = updateTime();
+    setInterval(updateTime, 60000);
 
     // Load data for 9AM block from localStorage
     // Load data for 10AM block from localStorage
@@ -84,51 +55,65 @@ $(document).ready(function () {
     // Load data for 3PM block from localStorage
     // Load data for 4PM block from localStorage
     // Load data for 5PM block from localStorage
+
     // Update the current date/time at the top of the page
-    localStorage.getItem('hour-9');
-    localStorage.getItem('hour-10');
-    localStorage.getItem('hour-11');
-    localStorage.getItem('hour-12');
-    localStorage.getItem('hour-13');
-    localStorage.getItem('hour-14');
-    localStorage.getItem('hour-15');
-    localStorage.getItem('hour-16');
-    localStorage.getItem('hour-17');
+    // function getUserText() {
+
+    //     // JSON.parse(localStorage.getItem('hour-9'));
+    //     // JSON.parse(localStorage.getItem('hour-10'));
+    //     // JSON.parse(localStorage.getItem('hour-11'));
+    //     // JSON.parse(localStorage.getItem('hour-12'));
+    //     // JSON.parse(localStorage.getItem('hour-13'));
+    //     // JSON.parse(localStorage.getItem('hour-14'));
+    //     // JSON.parse(localStorage.getItem('hour-15'));
+    //     // JSON.parse(localStorage.getItem('hour-16'));
+    //     // JSON.parse(localStorage.getItem('hour-17'));
+
+        
+    // }
+
+
+    // Store the value from the textarea in localStorage, using the hour as the key
+    // function storeUserText() {
+    //     // Stringify and set "hour" keys in localStorage to userText array
+    //     // localStorage.setItem('hour-9', JSON.stringify(hour9));
+    //     // localStorage.setItem('hour-10', JSON.stringify(hour10));
+    //     // localStorage.setItem('hour-11', JSON.stringify(hour11));
+    //     // localStorage.setItem('hour-12', JSON.stringify(hour12));
+    //     // localStorage.setItem('hour-13', JSON.stringify(hour13));
+    //     // localStorage.setItem('hour-14', JSON.stringify(hour14));
+    //     // localStorage.setItem('hour-15', JSON.stringify(hour15));
+    //     // localStorage.setItem('hour-16', JSON.stringify(hour16));
+    //     // localStorage.setItem('hour-17', JSON.stringify(hour17));
+    // }
 
 
     // Set up a click handler for the save button:
-    // Get the value from the textarea in the block that is being saved
-    // Get the time (i.e. 9) of the time block that's being saved
-    // Store the value from the textarea in localStorage, using the hour as the key
-
-    // var text = $('.description');
-
+    // When "Save" button is clicked...
     $('.saveBtn').on('click', function (event) {
         event.preventDefault();
         var element = event.target;
 
+        // If that element is a button...
         if (element.matches('button') === true) {
             alert('You clicked a button!');
-            var userInput = $(element).siblings('textarea').val();
-            // console.log(userInput);
-            inputArr.push(userInput);
 
-            localStorage.setItem('hour', userInput)
-            // var value = $(divId).children('textarea.);
-            // var value = element.siblings.getAttribute('data-value');
-            // console.log(value);
+            // Get the value of the user's input for each time block
+            var hourBlock = $(element).parent().attr('id');
+            var valueText = $(element).siblings('textarea').val().trim();
+            
+        
+            localStorage.setItem(hourBlock, valueText);
 
+            // Store updated userText in local storage, re-render the list
+            // storeUserText();
+            // renderUserText();
 
-
-            //  var y = $('div:nth-child(2)').value
-            //  console.log(y);
-
-            // var item = document.createElement("div");
-            // item.textContent = groceries[event.target.parentElement.id];
-            // shoppingCartEl.append(item);
         }
 
     })
+
+
 
 
 })
